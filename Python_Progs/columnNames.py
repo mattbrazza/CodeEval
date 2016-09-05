@@ -1,4 +1,5 @@
 import sys
+from math import log, pow
 
 def col_conv(n):
 	cols = {
@@ -30,7 +31,7 @@ def col_conv(n):
 		0: 'Z'}
 	return cols[n]
 
-inin = [["1", "13", "26", "28"], ["52"]] #, "3702"]]
+inin = [["1", "13", "26", "28"], ["52", "3702"]]
 #with open(sys.argv[1], 'r') as test_cases:
 for test_cases in inin:
 	for test in test_cases:
@@ -40,10 +41,22 @@ for test_cases in inin:
 		num = int(test)
 		ans = []
 		while (num > 0):
-			mdlo = num % 26
+			nexp = int(log(num, 26))
+			npow = pow(26, nexp)
+			print nexp, npow
+			
+			mdlo = (num - npow) % 26
 			lttr = col_conv(mdlo)
 			print mdlo, lttr
-			ans.append(lttr)
-			num = num - 26
+
+#			ans.append(lttr)
+			num = num - npow
 
 		print ans
+
+#26^2 = 676
+#26^3 = 17,576
+#A to Z = 1 to 26
+#AA to ZZ = 27 to 702
+#AAA to ZZZ = 703 to 18278
+#ZZZ = 26^1 + 26^2 + 26^3
